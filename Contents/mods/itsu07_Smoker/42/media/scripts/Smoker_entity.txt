@@ -1,0 +1,56 @@
+module Base
+{
+    xuiSkin default
+    {
+        entity ES_Smoker
+        {
+            LuaWindowClass = ISEntityWindow,
+            DisplayName = Smoker,
+            Icon = Build_Smoker,
+        }
+    }
+
+    entity Smoker
+    {
+        component UiConfig
+        {
+            xuiSkin = default,
+            entityStyle = ES_Smoker,
+            uiEnabled = false,
+        }
+        component SpriteConfig
+        {
+            isProp = true,
+            face SINGLE
+            {
+                layer
+                {
+                    row = smoker_01_0,
+                }
+            }
+        }
+        component CraftRecipe
+        {
+            timedAction = BuildMetalStructureSmall,
+            time = 100,
+            category = Farming,
+            Tags = Farming,
+            xpAward = Cooking:10,
+            Tooltip = Tooltip_craft_smokerDesc,
+            inputs
+            {
+                item 2 [Base.SmallSheetMetal],
+                item 4 [Base.Wire],
+                item 4 [Base.Screws],
+                item 1 tags[base:hammer] mode:keep flags[MayDegradeVeryLight],
+                item 1 tags[base:screwdriver] mode:keep flags[MayDegradeLight],
+            }
+        }
+        component CraftBenchSounds
+        {
+            AddFuel = CampfireAddFuel,
+            LightFire = CampfireLight,
+            Running = CampfireRunning,
+        }
+    }
+}

@@ -1,0 +1,348 @@
+module Base
+{
+    craftRecipe SH_CureFishFillet
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.FishFillet] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredFishFillet,
+        }
+    }
+
+    craftRecipe SH_CurePork
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Pork] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredPork,
+        }
+    }
+
+    craftRecipe SH_CurePorkChop
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.PorkChop] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredPorkChop,
+        }
+    }
+
+    craftRecipe SH_CureBeef
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Beef] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredBeef,
+        }
+    }
+
+    craftRecipe SH_CureSteak
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Steak] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredSteak,
+        }
+    }
+
+    craftRecipe SH_CureChicken
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Chicken] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredChicken,
+        }
+    }
+
+    craftRecipe SH_CureChickenFillet
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.ChickenFillet] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredChickenFillet,
+        }
+    }
+
+    craftRecipe SH_CureChickenWings
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.ChickenWings] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredChickenWings,
+        }
+    }
+
+    craftRecipe SH_CureTurkeyFillet
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.TurkeyFillet] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredTurkeyFillet,
+        }
+    }
+
+    craftRecipe SH_CureTurkeyLegs
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.TurkeyLegs] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredTurkeyLegs,
+        }
+    }
+
+    craftRecipe SH_CureTurkeyWings
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.TurkeyWings] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredTurkeyWings,
+        }
+    }
+
+    craftRecipe SH_CureMuttonChop
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.MuttonChop] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredMuttonChop,
+        }
+    }
+
+    craftRecipe SH_CureVenison
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Venison] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredVenison,
+        }
+    }
+
+    craftRecipe SH_CureRabbitmeat
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Rabbitmeat] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredRabbitmeat,
+        }
+    }
+
+    craftRecipe SH_CureSmallanimalmeat
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Smallanimalmeat] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredSmallanimalmeat,
+        }
+    }
+
+    craftRecipe SH_CureSmallbirdmeat
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Smallbirdmeat] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredSmallbirdmeat,
+        }
+    }
+
+    craftRecipe SH_CureCheese
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        inputs
+        {
+            item 1 [Base.Cheese] flags[InheritFoodAge;ItemCount],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredCheese,
+        }
+    }
+
+    craftRecipe SH_CureSmallFish
+    {
+        timedAction = SliceMeat_Surface,
+        time = 80,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:3,
+        OnTest = SmokerRecipe.isSmallFish,
+        inputs
+        {
+            item 1 tags[base:uncutfish] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Salt;Base.SeasoningSalt],
+        }
+        outputs
+        {
+            item 1 Smoker.CuredSmallFish,
+        }
+    }
+
+    craftRecipe SH_BreadSmallFish
+    {
+        timedAction = MixingBowl,
+        time = 100,
+        Tags = AnySurfaceCraft;Cooking,
+        category = Cooking,
+        xpAward = Cooking:5,
+        OnTest = SmokerRecipe.isSmallFish,
+        inputs
+        {
+            item 1 tags[base:uncutfish] flags[InheritFoodAge;ItemCount],
+            item 2 [Base.Cornmeal2],
+            item 1 tags[base:egg] flags[IsUncookedFoodItem;ItemCount],
+            item 1 [Base.Garlic;Base.PowderedGarlic;Base.WildGarlic2;Base.WildGarlicDried],
+            item 3 [Base.OilVegetable;Base.OilOlive;Base.Lard],
+        }
+        outputs
+        {
+            item 1 Smoker.BreadedSmallFish,
+        }
+    }
+}

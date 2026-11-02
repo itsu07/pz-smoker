@@ -1,0 +1,5 @@
+# Contain vanilla-derived art (game icons/sprites): do not publish
+art/smoker_temp.png
+art/preview_*.png
+art/overview.png
+__pycache__/

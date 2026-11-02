@@ -1,0 +1,22 @@
+{
+    "SH_CureFishFillet": "魚の切身を燻製用に仕込む",
+    "SH_CurePork": "豚肉を燻製用に仕込む",
+    "SH_CurePorkChop": "豚肉の切り身を燻製用に仕込む",
+    "SH_CureBeef": "牛肉を燻製用に仕込む",
+    "SH_CureSteak": "ステーキ肉を燻製用に仕込む",
+    "SH_CureChicken": "鶏もも肉を燻製用に仕込む",
+    "SH_CureChickenFillet": "鶏肉の切り身を燻製用に仕込む",
+    "SH_CureChickenWings": "鶏手羽を燻製用に仕込む",
+    "SH_CureTurkeyFillet": "ターキーの切り身を燻製用に仕込む",
+    "SH_CureTurkeyLegs": "ターキーの脚を燻製用に仕込む",
+    "SH_CureTurkeyWings": "ターキーの手羽を燻製用に仕込む",
+    "SH_CureMuttonChop": "骨付ラムを燻製用に仕込む",
+    "SH_CureVenison": "鹿肉を燻製用に仕込む",
+    "SH_CureRabbitmeat": "ウサギ肉を燻製用に仕込む",
+    "SH_CureSmallanimalmeat": "げっ歯類の肉を燻製用に仕込む",
+    "SH_CureSmallbirdmeat": "小鳥の肉を燻製用に仕込む",
+    "SH_CureCheese": "チーズを燻製用に仕込む",
+    "SH_CureSmallFish": "小魚を燻製用に仕込む",
+    "SH_BreadSmallFish": "小魚にコーンミールの衣を付ける",
+    "Smoker": "燻製器"
+}

@@ -1,0 +1,28 @@
+module Smoker
+{
+    model SmokerBreadedFish_Ground
+    {
+        mesh = WorldItems/Fish_Bluegill_Sunfish,
+        texture = WorldItems/SmokerBreadedFish,
+        scale = 0.195,
+        attachment Bip01_Prop2
+        {
+            offset = -0.0302 0.0671 0.0232,
+            rotate = 46.6017 -51.107 -143.5337,
+            scale = 0.5358,
+        }
+    }
+
+    model SmokerFriedFish_Ground
+    {
+        mesh = WorldItems/Fish_Bluegill_Sunfish,
+        texture = WorldItems/SmokerFriedFish,
+        scale = 0.195,
+        attachment Bip01_Prop2
+        {
+            offset = -0.0302 0.0671 0.0232,
+            rotate = 46.6017 -51.107 -143.5337,
+            scale = 0.5358,
+        }
+    }
+}

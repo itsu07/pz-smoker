@@ -1,0 +1,6 @@
+name=Smoker
+id=itsu07_Smoker
+description=Build a smoker and smoke fish fillets, small whole fish, meat and cheese. Smoked food keeps for weeks and is ready to eat.
+pack=smoker
+tiledef=smoker 4217
+poster=poster.png

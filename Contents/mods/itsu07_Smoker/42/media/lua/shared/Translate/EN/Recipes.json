@@ -1,0 +1,22 @@
+{
+    "SH_CureFishFillet": "Prepare Fish Fillet for Smoking",
+    "SH_CurePork": "Prepare Pork for Smoking",
+    "SH_CurePorkChop": "Prepare Pork Chop for Smoking",
+    "SH_CureBeef": "Prepare Beef for Smoking",
+    "SH_CureSteak": "Prepare Steak for Smoking",
+    "SH_CureChicken": "Prepare Chicken Leg for Smoking",
+    "SH_CureChickenFillet": "Prepare Chicken Fillet for Smoking",
+    "SH_CureChickenWings": "Prepare Chicken Wing for Smoking",
+    "SH_CureTurkeyFillet": "Prepare Turkey Fillet for Smoking",
+    "SH_CureTurkeyLegs": "Prepare Turkey Leg for Smoking",
+    "SH_CureTurkeyWings": "Prepare Turkey Wing for Smoking",
+    "SH_CureMuttonChop": "Prepare Mutton Chop for Smoking",
+    "SH_CureVenison": "Prepare Venison for Smoking",
+    "SH_CureRabbitmeat": "Prepare Rabbit Meat for Smoking",
+    "SH_CureSmallanimalmeat": "Prepare Rodent Meat for Smoking",
+    "SH_CureSmallbirdmeat": "Prepare Small Bird Meat for Smoking",
+    "SH_CureCheese": "Prepare Cheese for Smoking",
+    "SH_CureSmallFish": "Prepare Small Fish for Smoking",
+    "SH_BreadSmallFish": "Bread Small Fish in Cornmeal",
+    "Smoker": "Smoker"
+}
