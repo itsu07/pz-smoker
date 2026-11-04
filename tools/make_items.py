@@ -7,9 +7,12 @@ media/scripts/generated/items/food.txt, so re-run this after game updates.
 
 Flow in game:
   raw food + salt  --(SH_Cure* recipe)-->  Smoker.Cured*  (raw, cookable)
-  Cured* heated MINUTES in a lit smoker  -->  Smoker.Smoked*  (ReplaceOnCooked)
+  Cured* MINUTES in a lit smoker         -->  Smoker.Smoked*
+                                             (lua/server/Smoker_Smoke.lua)
   Cured* heated anywhere else            -->  plain cooked vanilla food
                                              (SmokerRecipe.onCooked, Lua)
+Every step keeps the food's own hunger, nutrition, poison and freshness
+(InheritFood in the recipe, SmokerRecipe.replaceItem for the swaps).
 
 Writes (under Contents/mods/itsu07_Smoker/42/media):
   scripts/Smoker_items.txt        module Smoker
