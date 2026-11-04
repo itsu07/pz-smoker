@@ -39,21 +39,8 @@ local function isLit(obj)
     return instanceof(obj, "IsoFireplace") and obj:isLit()
 end
 
--- Swap an item for a new one of fullType, the way vanilla ReplaceOnCooked does.
--- A new item is sent to every client as a whole, so its state (burnt flag,
--- modData) reaches them without relying on per-field sync.
-local function replace(container, item, fullType, setup)
-    local new = container:AddItem(fullType)
-    if not new then return nil end
-    new:setAge(item:getAge())
-    setup(new)
-    container:DoRemoveItem(item)
-    if isServer() then
-        sendAddItemToContainer(container, new)
-        sendRemoveItemFromContainer(container, item)
-    end
-    return new
-end
+-- the swap keeps the food as it is (SmokerRecipe.replaceItem)
+local replace = SmokerRecipe.replaceItem
 
 local function finish(container, item, target)
     if isDebugEnabled() then print("[Smoker] smoked " .. item:getFullType()) end

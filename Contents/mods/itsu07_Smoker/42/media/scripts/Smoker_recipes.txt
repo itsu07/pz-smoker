@@ -9,7 +9,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.FishFillet] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.FishFillet] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -27,7 +27,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Pork] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Pork] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -45,7 +45,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.PorkChop] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.PorkChop] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -63,7 +63,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Beef] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Beef] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -81,7 +81,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Steak] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Steak] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -99,7 +99,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Chicken] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Chicken] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -117,7 +117,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.ChickenFillet] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.ChickenFillet] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -135,7 +135,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.ChickenWings] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.ChickenWings] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -153,7 +153,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.TurkeyFillet] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.TurkeyFillet] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -171,7 +171,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.TurkeyLegs] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.TurkeyLegs] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -189,7 +189,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.TurkeyWings] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.TurkeyWings] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -207,7 +207,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.MuttonChop] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.MuttonChop] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -225,7 +225,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Venison] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Venison] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -243,7 +243,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Rabbitmeat] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Rabbitmeat] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -261,7 +261,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Smallanimalmeat] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Smallanimalmeat] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -279,7 +279,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Smallbirdmeat] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Smallbirdmeat] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
@@ -297,7 +297,7 @@ module Base
         xpAward = Cooking:3,
         inputs
         {
-            item 1 [Base.Cheese] flags[InheritFoodAge;ItemCount],
+            item 1 [Base.Cheese] flags[IsUncookedFoodItem;InheritFood;ItemCount],
         }
         outputs
         {
@@ -315,7 +315,7 @@ module Base
         OnTest = SmokerRecipe.isSmallFish,
         inputs
         {
-            item 1 tags[base:uncutfish] flags[InheritFoodAge;ItemCount],
+            item 1 tags[base:uncutfish] flags[IsUncookedFoodItem;InheritFood;ItemCount],
             item 1 [Base.Salt;Base.SeasoningSalt],
         }
         outputs
