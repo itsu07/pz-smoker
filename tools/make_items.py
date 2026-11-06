@@ -7,9 +7,12 @@ media/scripts/generated/items/food.txt, so re-run this after game updates.
 
 Flow in game:
   raw food + salt  --(SH_Cure* recipe)-->  Smoker.Cured*  (raw, cookable)
-  Cured* heated MINUTES in a lit smoker  -->  Smoker.Smoked*  (ReplaceOnCooked)
+  Cured* MINUTES in a lit smoker         -->  Smoker.Smoked*
+                                             (lua/server/Smoker_Smoke.lua)
   Cured* heated anywhere else            -->  plain cooked vanilla food
                                              (SmokerRecipe.onCooked, Lua)
+Every step keeps the food's own hunger, nutrition, poison and freshness
+(InheritFood in the recipe, SmokerRecipe.replaceItem for the swaps).
 
 Writes (under Contents/mods/itsu07_Smoker/42/media):
   scripts/Smoker_items.txt        module Smoker
@@ -54,8 +57,8 @@ MEAT = [
 CHEESE = [
     ('Cheese', 'Cheese', 'Cheese', 'チーズ'),
 ]
-# Whole fish too small to fillet. Nutrition is fixed (the caught fish's own
-# values vary by size and are not inherited).
+# Whole fish too small to fillet. These values only show for a spawned item:
+# the caught fish's own (they vary by size) are inherited by the cure recipe.
 SMALL_FISH = ('SmallFish', 'Bluegill', 'Small Fish', '小魚')
 SMALL_FISH_VALUES = {'HungerChange': '-10.0', 'Calories': '110.0', 'Carbohydrates': '0.0',
                      'Lipids': '2.0', 'Proteins': '22.0', 'Weight': '0.25'}
@@ -132,7 +135,8 @@ def smoked_item(stem, v, kind, fixed=False):
     weight = float(v['Weight']) if fixed else float(v['Weight']) * WEIGHT_FACTOR
     lines, tint = food_lines(v, weight, FRESH[kind], TINT_SMOKED, ready_evolved)
     # better for mood than plain cooked food (vanilla cooked fish/meat: 0, plus a
-    # small bonus only while hot)
+    # small bonus only while hot). Hunger and nutrition are the prep's own, copied
+    # by the smoker (SmokerRecipe.replaceItem); these mood values are kept.
     unhappy = -10 if kind == 'meat' else -15
     lines += [f'UnhappyChange = {unhappy}', 'BoredomChange = -10']
     tags = 'base:cheese' if kind == 'cheese' else ('base:fishmeat' if 'fishmeat' in v.get('Tags', '') or fixed else '')
@@ -150,7 +154,11 @@ def cure_recipe(stem, inp, kind, extra=''):
             f'        xpAward = Cooking:3,\n'
             f'{extra}'
             f'        inputs\n        {{\n'
-            f'            item 1 {inp} flags[InheritFoodAge;ItemCount],\n'
+            # InheritFood: the prep keeps the input's hunger, nutrition, poison
+            # and freshness (Food.copyFoodFromSplit), not the script's full values.
+            # IsUncookedFoodItem: raw only; it would also copy the cooked/burnt
+            # state, and a cooked prep never smokes, it only burns
+            f'            item 1 {inp} flags[IsUncookedFoodItem;InheritFood;ItemCount],\n'
             f'{salt}'
             f'        }}\n'
             f'        outputs\n        {{\n'

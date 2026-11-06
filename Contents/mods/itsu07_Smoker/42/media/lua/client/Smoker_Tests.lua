@@ -91,6 +91,15 @@ local function testSmoking(smoker)
     if not (pork and cheese) then return end
     local porkTarget = SmokerRecipe.SMOKE_MINUTES.CuredPork
     local cheeseTarget = SmokerRecipe.SMOKE_MINUTES.CuredCheese
+    -- a poor cut, half eaten and stale: smoking keeps what is left, no more
+    pork:setBaseHunger(pork:getBaseHunger() * 0.5)
+    pork:setHungChange(pork:getBaseHunger() * 0.5)
+    pork:setCalories(pork:getCalories() * 0.25)
+    pork:setAge((pork:getOffAge() + pork:getOffAgeMax()) / 2)
+    local porkHunger, porkBase, porkCalories = pork:getHungChange(), pork:getBaseHunger(), pork:getCalories()
+    cheese:setHungChange(cheese:getHungChange() * 0.5)
+    local cheeseHunger = cheese:getHungChange()
+    local function same(a, b) return math.abs(a - b) < 0.0001 end
 
     pork:setCookingTime(30)
     update(smoker, 0, false)
@@ -104,6 +113,8 @@ local function testSmoking(smoker)
     update(smoker, 1, true)
     local smokedCheese = find(container, "Smoker.SmokedCheese")
     check("cheese smoked at " .. cheeseTarget .. " min", smokedCheese ~= nil and find(container, "Smoker.CuredCheese") == nil)
+    check("smoked cheese keeps the half eaten hunger", smokedCheese ~= nil and same(smokedCheese:getHungChange(), cheeseHunger),
+        smokedCheese and smokedCheese:getHungChange())
 
     update(smoker, porkTarget - cheeseTarget - 1, true)
     check("pork not done 1 min early", find(container, "Smoker.SmokedPork") == nil)
@@ -114,6 +125,14 @@ local function testSmoking(smoker)
         remove(container, find(container, "Smoker.SmokedCheese")); remove(container, find(container, "Smoker.CuredPork"))
         return
     end
+    check("smoked pork keeps the prep's hunger left", same(smokedPork:getHungChange(), porkHunger), smokedPork:getHungChange())
+    check("smoked pork keeps the prep's full hunger", same(smokedPork:getBaseHunger(), porkBase), smokedPork:getBaseHunger())
+    check("smoked pork keeps the prep's calories", same(smokedPork:getCalories(), porkCalories), smokedPork:getCalories())
+    local fresh = instanceItem("Smoker.SmokedPork")
+    check("smoked pork keeps its mood bonus", smokedPork:getUnhappyChangeUnmodified() == fresh:getUnhappyChangeUnmodified()
+        and smokedPork:getBoredomChangeUnmodified() == fresh:getBoredomChangeUnmodified(), smokedPork:getUnhappyChangeUnmodified())
+    check("stale prep gives stale smoked pork", smokedPork:getAge() > smokedPork:getOffAge()
+        and smokedPork:getAge() < smokedPork:getOffAgeMax(), smokedPork:getAge())
     -- burning replaces the item (so clients get it whole): look items up again
     local function porkNow() return find(container, "Smoker.SmokedPork") end
     local function burntNow() local p = porkNow(); return p ~= nil and p:isBurnt() end
@@ -126,6 +145,7 @@ local function testSmoking(smoker)
     update(smoker, 1, true)
     check("smoked pork burnt after " .. SmokerRecipe.BURN_MINUTES .. " more min", burntNow())
     check("burnt pork is a new item (sent whole to clients)", porkNow() ~= smokedPork)
+    check("burnt pork keeps the hunger left", porkNow() ~= nil and same(porkNow():getHungChange(), porkHunger))
     local cheeseNow = find(container, "Smoker.SmokedCheese")
     check("smoked cheese (left in longer) burnt too", cheeseNow ~= nil and cheeseNow:isBurnt())
     local burntItem = porkNow()
@@ -154,6 +174,8 @@ local function testOutsideCooking(player)
     local items = inv:getItems()
     for i = 0, items:size() - 1 do before[items:get(i):getID()] = true end
     local cured = inv:AddItem("Smoker.CuredPork")
+    cured:setHungChange(cured:getHungChange() * 0.5)
+    local curedHunger = cured:getHungChange()
     SmokerRecipe.onCooked(cured)
     SmokerRecipe.processPending()
     local plain = nil
@@ -164,8 +186,153 @@ local function testOutsideCooking(player)
     end
     check("cured pork cooked outside -> plain pork", plain ~= nil and cured:getContainer() ~= inv)
     check("plain pork is cooked", plain ~= nil and plain:isCooked())
+    check("plain pork keeps the half eaten hunger", plain ~= nil and math.abs(plain:getHungChange() - curedHunger) < 0.0001,
+        plain and plain:getHungChange())
     remove(inv, plain)
     remove(inv, cured)
+end
+
+-- the cure recipe's food input (the one that is not salt)
+local function foodInput(recipe)
+    local inputs = recipe:getInputs()
+    for i = 0, inputs:size() - 1 do
+        local input = inputs:get(i)
+        local salt = false
+        local possible = input:getPossibleInputItems()
+        for j = 0, possible:size() - 1 do
+            if possible:get(j):getFullName() == "Base.Salt" then salt = true end
+        end
+        if not salt and possible:size() > 0 then return input end
+    end
+    return nil
+end
+
+-- 6. cure recipes keep the input's food and take raw food only
+local function testCureRecipes()
+    local sm = getScriptManager()
+    check("InputFlag is exposed to Lua", InputFlag ~= nil)
+    if not InputFlag then return end
+    for cured in pairs(SmokerRecipe.SMOKE_MINUTES) do
+        local name = "SH_Cure" .. string.sub(cured, 6)
+        local recipe = sm:getCraftRecipe(name)
+        local input = recipe and foodInput(recipe)
+        check(name .. " has a food input", input ~= nil)
+        if input then
+            check(name .. " inherits food (hunger, nutrition, poison, freshness)", input:hasFlag(InputFlag.InheritFood))
+            check(name .. " does not copy the age alone", not input:hasFlag(InputFlag.InheritFoodAge))
+            check(name .. " takes raw food only", input:isUncookedFoodItem())
+        end
+    end
+
+    -- the same test the craft window uses on each item
+    local pork = foodInput(sm:getCraftRecipe("SH_CurePork"))
+    if pork then
+        local raw = instanceItem("Base.Pork")
+        local cooked = instanceItem("Base.Pork")
+        cooked:setCooked(true)
+        local burnt = instanceItem("Base.Pork")
+        burnt:setBurnt(true)
+        check("raw pork can be cured", pork:doesItemPassFoodAndCookingTests(raw))
+        check("cooked pork cannot be cured", not pork:doesItemPassFoodAndCookingTests(cooked))
+        check("burnt pork cannot be cured", not pork:doesItemPassFoodAndCookingTests(burnt))
+    end
+    local fish = foodInput(sm:getCraftRecipe("SH_CureSmallFish"))
+    if fish then
+        local cooked = instanceItem("Base.Bluegill")
+        cooked:setCooked(true)
+        check("raw small fish can be cured", fish:doesItemPassFoodAndCookingTests(instanceItem("Base.Bluegill")))
+        check("cooked small fish cannot be cured", not fish:doesItemPassFoodAndCookingTests(cooked))
+    end
+    local cheese = foodInput(sm:getCraftRecipe("SH_CureCheese"))
+    if cheese then
+        -- cheese is not cookable, so the raw only flag must not block it
+        check("cheese can be cured", cheese:doesItemPassFoodAndCookingTests(instanceItem("Base.Cheese")))
+    end
+end
+
+local function freshness(item)
+    if item:isRotten() then return "rotten" end
+    if item:isFresh() then return "fresh" end
+    return "stale"
+end
+
+-- 7. every swap keeps what is left of the food: SmokerRecipe.replaceItem called
+-- directly (the smoker, burning and outside cooking all go through it)
+local function testFoodKept(player)
+    local inv = player:getInventory()
+    local function same(a, b) return math.abs(a - b) < 0.0001 end
+    local smokedScript = instanceItem("Smoker.SmokedPork")
+    local ages = {
+        fresh = function(it) return it:getOffAge() * 0.5 end,
+        stale = function(it) return (it:getOffAge() + it:getOffAgeMax()) / 2 end,
+        rotten = function(it) return it:getOffAgeMax() + 1 end,
+    }
+    for state, age in pairs(ages) do
+        local prep = inv:AddItem("Smoker.CuredPork")
+        -- a poor cut, half eaten and poisoned
+        prep:setBaseHunger(prep:getBaseHunger() * 0.4)
+        prep:setHungChange(prep:getBaseHunger() * 0.5)
+        prep:setCalories(prep:getCalories() * 0.2)
+        prep:setProteins(prep:getProteins() * 0.2)
+        prep:setLipids(prep:getLipids() * 0.2)
+        prep:setCarbohydrates(prep:getCarbohydrates() * 0.2)
+        prep:setPoisonPower(7)
+        prep:setAge(age(prep))
+        local want = {
+            hunger = prep:getHungChange(), base = prep:getBaseHunger(), calories = prep:getCalories(),
+            proteins = prep:getProteins(), lipids = prep:getLipids(), carbs = prep:getCarbohydrates(),
+        }
+        check(state .. " prep is " .. state, freshness(prep) == state, freshness(prep))
+
+        local smoked = SmokerRecipe.replaceItem(inv, prep, "Smoker.SmokedPork")
+        check(state .. ": prep replaced by smoked pork", smoked ~= nil and prep:getContainer() ~= inv)
+        if smoked then
+            local t = state .. " smoked pork keeps "
+            check(t .. "hunger left", same(smoked:getHungChange(), want.hunger), smoked:getHungChange())
+            check(t .. "full hunger", same(smoked:getBaseHunger(), want.base), smoked:getBaseHunger())
+            check(t .. "calories", same(smoked:getCalories(), want.calories), smoked:getCalories())
+            check(t .. "proteins", same(smoked:getProteins(), want.proteins), smoked:getProteins())
+            check(t .. "lipids", same(smoked:getLipids(), want.lipids), smoked:getLipids())
+            check(t .. "carbohydrates", same(smoked:getCarbohydrates(), want.carbs), smoked:getCarbohydrates())
+            check(t .. "poison", smoked:getPoisonPower() == 7, smoked:getPoisonPower())
+            check(t .. "its freshness (" .. state .. ")", freshness(smoked) == state, freshness(smoked))
+            -- the bonus from the script, not the prep's 0 and not a stale value baked in
+            check(t .. "the smoked mood bonus",
+                smoked:getUnhappyChangeUnmodified() == smokedScript:getUnhappyChangeUnmodified()
+                and smoked:getBoredomChangeUnmodified() == smokedScript:getBoredomChangeUnmodified(),
+                smoked:getUnhappyChangeUnmodified())
+
+            local burnt = SmokerRecipe.replaceItem(inv, smoked, "Smoker.SmokedPork", function(b) b:setBurnt(true) end)
+            check(state .. " burnt pork is burnt", burnt ~= nil and burnt:isBurnt())
+            if burnt then
+                check(state .. " burnt pork keeps hunger left", same(burnt:getHungChange(), want.hunger), burnt:getHungChange())
+                check(state .. " burnt pork keeps calories", same(burnt:getCalories(), want.calories), burnt:getCalories())
+                check(state .. " burnt pork keeps its freshness", freshness(burnt) == state, freshness(burnt))
+                remove(inv, burnt)
+            end
+            remove(inv, smoked)
+        end
+        remove(inv, prep)
+    end
+
+    -- outside cooking: prep -> plain vanilla food, cooked
+    local prep = inv:AddItem("Smoker.CuredPork")
+    prep:setHungChange(prep:getHungChange() * 0.3)
+    prep:setCalories(prep:getCalories() * 0.3)
+    prep:setPoisonPower(5)
+    prep:setAge((prep:getOffAge() + prep:getOffAgeMax()) / 2)
+    local hunger, calories = prep:getHungChange(), prep:getCalories()
+    local plain = SmokerRecipe.replaceItem(inv, prep, "Base.Pork", function(p) p:setCooked(true) end)
+    check("plain pork from prep exists", plain ~= nil)
+    if plain then
+        check("plain pork keeps hunger left", same(plain:getHungChange(), hunger), plain:getHungChange())
+        check("plain pork keeps calories", same(plain:getCalories(), calories), plain:getCalories())
+        check("plain pork keeps poison", plain:getPoisonPower() == 5, plain:getPoisonPower())
+        check("plain pork keeps its freshness (stale)", freshness(plain) == "stale", freshness(plain))
+        check("plain pork is cooked", plain:isCooked())
+        remove(inv, plain)
+    end
+    remove(inv, prep)
 end
 
 local function run(player, smoker)
@@ -177,11 +344,13 @@ local function run(player, smoker)
     local tests = {
         { "definitions", function() testDefinitions() end },
         { "small fish", function() testSmallFish() end },
+        { "cure recipes", function() testCureRecipes() end },
     }
     if not isClient() then
         table.insert(tests, { "smoking", function() testSmoking(smoker) end })
         table.insert(tests, { "fuel", function() testFuel(smoker) end })
         table.insert(tests, { "outside cooking", function() testOutsideCooking(player) end })
+        table.insert(tests, { "food kept", function() testFoodKept(player) end })
     end
     for _, t in ipairs(tests) do
         local ok, err = pcall(t[2])
